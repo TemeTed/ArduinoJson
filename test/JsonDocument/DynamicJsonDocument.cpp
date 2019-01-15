@@ -74,7 +74,7 @@ TEST_CASE("DynamicJsonDocument") {
   }
 }
 
-TEST_CASE("DynamicJsonDocument copies") {
+TEST_CASE("DynamicJsonDocument constructor") {
   SECTION("Copy constructor") {
     DynamicJsonDocument doc1(1234);
     deserializeJson(doc1, "{\"hello\":\"world\"}");
