@@ -18,11 +18,11 @@ class StaticJsonDocument : public JsonDocument {
 
   StaticJsonDocument(const JsonDocument& src)
       : JsonDocument(_buffer, ACTUAL_CAPACITY) {
-    copy(src);
+    set(src);
   }
 
   StaticJsonDocument operator=(const JsonDocument& src) {
-    copy(src);
+    set(src);
     return *this;
   }
 

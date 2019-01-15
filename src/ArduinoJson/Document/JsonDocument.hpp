@@ -53,6 +53,11 @@ class JsonDocument : public Visitable {
     return _pool.capacity();
   }
 
+  void set(const JsonDocument& src) {
+    nestingLimit = src.nestingLimit;
+    to<VariantRef>().set(src.as<VariantRef>());
+  }
+
   template <typename T>
   typename VariantTo<T>::type to() {
     clear();

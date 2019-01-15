@@ -17,12 +17,12 @@ class DynamicJsonDocument : public JsonDocument {
 
   DynamicJsonDocument(const DynamicJsonDocument& src)
       : JsonDocument(allocPool(src.capacity())) {
-    copy(src);
+    set(src);
   }
 
   DynamicJsonDocument(const JsonDocument& src)
       : JsonDocument(allocPool(src.capacity())) {
-    copy(src);
+    set(src);
   }
 
   ~DynamicJsonDocument() {
@@ -31,14 +31,14 @@ class DynamicJsonDocument : public JsonDocument {
 
   DynamicJsonDocument& operator=(const DynamicJsonDocument& src) {
     reallocPoolIfTooSmall(src.memoryUsage());
-    copy(src);
+    set(src);
     return *this;
   }
 
   template <typename T>
   DynamicJsonDocument& operator=(const JsonDocument& src) {
     reallocPoolIfTooSmall(src.memoryUsage());
-    copy(src);
+    set(src);
     return *this;
   }
 
