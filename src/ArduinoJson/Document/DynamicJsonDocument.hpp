@@ -25,6 +25,13 @@ class DynamicJsonDocument : public JsonDocument {
     set(src);
   }
 
+  template <typename T>
+  DynamicJsonDocument(const T& src,
+                      typename enable_if<IsVisitable<T>::value>::type* = 0)
+      : JsonDocument(allocPool(src.memoryUsage())) {
+    set(src);
+  }
+
   ~DynamicJsonDocument() {
     freePool();
   }

@@ -5,6 +5,7 @@
 #pragma once
 
 #include "../Memory/MemoryPool.hpp"
+#include "../Object/ObjectRef.hpp"
 #include "../Variant/VariantRef.hpp"
 #include "../Variant/VariantTo.hpp"
 
@@ -53,9 +54,17 @@ class JsonDocument : public Visitable {
     return _pool.capacity();
   }
 
-  void set(const JsonDocument& src) {
+  bool set(const JsonDocument& src) {
     nestingLimit = src.nestingLimit;
-    to<VariantRef>().set(src.as<VariantRef>());
+    return to<VariantRef>().set(src.as<VariantRef>());
+  }
+
+  bool set(ObjectConstRef src) {
+    return to<ObjectRef>().copyFrom(src);
+  }
+
+  bool set(ArrayConstRef src) {
+    return to<ArrayRef>().copyFrom(src);
   }
 
   template <typename T>
