@@ -5,6 +5,12 @@
 #include <ArduinoJson.h>
 #include <catch.hpp>
 
+static void REQUIRE_JSON(JsonDocument& doc, const std::string& expected) {
+  std::string json;
+  serializeJson(doc, json);
+  REQUIRE(json == expected);
+}
+
 TEST_CASE("StaticJsonDocument") {
   SECTION("capacity()") {
     SECTION("matches template argument") {
@@ -29,7 +35,6 @@ TEST_CASE("StaticJsonDocument") {
     REQUIRE(json == "{\"hello\":\"world\"}");
   }
 
-<<<<<<< HEAD
   SECTION("Copy assignment") {
     StaticJsonDocument<200> doc1, doc2;
     doc1.to<JsonVariant>().set(666);
@@ -37,79 +42,35 @@ TEST_CASE("StaticJsonDocument") {
 
     doc1 = doc2;
 
-    std::string json;
-    serializeJson(doc1, json);
-    REQUIRE(json == "{\"hello\":\"world\"}");
+    REQUIRE_JSON(doc2, "{\"hello\":\"world\"}");
   }
 
-  SECTION("Copy constructor") {
-    StaticJsonDocument<200> doc1;
-    deserializeJson(doc1, "{\"hello\":\"world\"}");
-=======
   SECTION("Contructor") {
     SECTION("Copy constructor") {
       StaticJsonDocument<200> doc1;
       deserializeJson(doc1, "{\"hello\":\"world\"}");
-      doc1.nestingLimit = 42;
 
       StaticJsonDocument<200> doc2 = doc1;
 
-      std::string json;
-      serializeJson(doc2, json);
-      REQUIRE(json == "{\"hello\":\"world\"}");
-      REQUIRE(doc2.nestingLimit == 42);
+      REQUIRE_JSON(doc2, "{\"hello\":\"world\"}");
     }
 
     SECTION("Construct from StaticJsonDocument of different size") {
-      StaticJsonDocument<300> doc2;
-      deserializeJson(doc2, "{\"hello\":\"world\"}");
-      doc2.nestingLimit = 42;
->>>>>>> Reorg tests
+      StaticJsonDocument<300> doc1;
+      deserializeJson(doc1, "{\"hello\":\"world\"}");
 
-      StaticJsonDocument<200> doc1 = doc2;
+      StaticJsonDocument<200> doc2 = doc1;
 
-<<<<<<< HEAD
-    std::string json;
-    serializeJson(doc2, json);
-    REQUIRE(json == "{\"hello\":\"world\"}");
-  }
-
-  SECTION("Assign from StaticJsonDocument of different capacity") {
-    StaticJsonDocument<200> doc1;
-    StaticJsonDocument<300> doc2;
-    doc1.to<JsonVariant>().set(666);
-    deserializeJson(doc2, "{\"hello\":\"world\"}");
-=======
-      std::string json;
-      serializeJson(doc1, json);
-      REQUIRE(json == "{\"hello\":\"world\"}");
-      REQUIRE(doc1.nestingLimit == 42);
+      REQUIRE_JSON(doc2, "{\"hello\":\"world\"}");
     }
 
     SECTION("Construct from DynamicJsonDocument") {
       DynamicJsonDocument doc2(4096);
       deserializeJson(doc2, "{\"hello\":\"world\"}");
-      doc2.nestingLimit = 42;
->>>>>>> Reorg tests
 
       StaticJsonDocument<200> doc1 = doc2;
 
-<<<<<<< HEAD
-    std::string json;
-    serializeJson(doc1, json);
-    REQUIRE(json == "{\"hello\":\"world\"}");
-  }
-
-  SECTION("Assign from DynamicJsonDocument") {
-    StaticJsonDocument<200> doc1;
-    DynamicJsonDocument doc2(4096);
-    doc1.to<JsonVariant>().set(666);
-    deserializeJson(doc2, "{\"hello\":\"world\"}");
-=======
-      std::string json;
-      serializeJson(doc1, json);
-      REQUIRE(json == "{\"hello\":\"world\"}");
-      REQUIRE(doc1.nestingLimit == 42);
+      REQUIRE_JSON(doc1, "{\"hello\":\"world\"}");
     }
   }
 
@@ -117,74 +78,33 @@ TEST_CASE("StaticJsonDocument") {
     SECTION("Copy assignment") {
       StaticJsonDocument<200> doc1, doc2;
       doc1.to<JsonVariant>().set(666);
-      deserializeJson(doc2, "{\"hello\":\"world\"}");
-      doc2.nestingLimit = 42;
->>>>>>> Reorg tests
+      deserializeJson(doc1, "{\"hello\":\"world\"}");
 
-      doc1 = doc2;
+      doc2 = doc1;
 
-<<<<<<< HEAD
-    std::string json;
-    serializeJson(doc1, json);
-    REQUIRE(json == "{\"hello\":\"world\"}");
-  }
-
-  SECTION("Construct from StaticJsonDocument of different size") {
-    StaticJsonDocument<300> doc2;
-    deserializeJson(doc2, "{\"hello\":\"world\"}");
-=======
-      std::string json;
-      serializeJson(doc1, json);
-      REQUIRE(json == "{\"hello\":\"world\"}");
-      REQUIRE(doc1.nestingLimit == 42);
+      REQUIRE_JSON(doc2, "{\"hello\":\"world\"}");
     }
 
     SECTION("Assign from StaticJsonDocument of different capacity") {
       StaticJsonDocument<200> doc1;
       StaticJsonDocument<300> doc2;
       doc1.to<JsonVariant>().set(666);
-      deserializeJson(doc2, "{\"hello\":\"world\"}");
-      doc2.nestingLimit = 42;
->>>>>>> Reorg tests
+      deserializeJson(doc1, "{\"hello\":\"world\"}");
 
-      doc1 = doc2;
+      doc2 = doc1;
 
-<<<<<<< HEAD
-    std::string json;
-    serializeJson(doc1, json);
-    REQUIRE(json == "{\"hello\":\"world\"}");
-  }
-
-  SECTION("Construct from DynamicJsonDocument") {
-    DynamicJsonDocument doc2(4096);
-    deserializeJson(doc2, "{\"hello\":\"world\"}");
-=======
-      std::string json;
-      serializeJson(doc1, json);
-      REQUIRE(json == "{\"hello\":\"world\"}");
-      REQUIRE(doc1.nestingLimit == 42);
+      REQUIRE_JSON(doc2, "{\"hello\":\"world\"}");
     }
 
     SECTION("Assign from DynamicJsonDocument") {
       StaticJsonDocument<200> doc1;
       DynamicJsonDocument doc2(4096);
       doc1.to<JsonVariant>().set(666);
-      deserializeJson(doc2, "{\"hello\":\"world\"}");
-      doc2.nestingLimit = 42;
->>>>>>> Reorg tests
+      deserializeJson(doc1, "{\"hello\":\"world\"}");
 
-      doc1 = doc2;
+      doc2 = doc1;
 
-<<<<<<< HEAD
-    std::string json;
-    serializeJson(doc1, json);
-    REQUIRE(json == "{\"hello\":\"world\"}");
-=======
-      std::string json;
-      serializeJson(doc1, json);
-      REQUIRE(json == "{\"hello\":\"world\"}");
-      REQUIRE(doc1.nestingLimit == 42);
+      REQUIRE_JSON(doc2, "{\"hello\":\"world\"}");
     }
->>>>>>> Reorg tests
   }
 }

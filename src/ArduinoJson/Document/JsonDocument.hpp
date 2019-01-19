@@ -55,7 +55,6 @@ class JsonDocument : public Visitable {
   }
 
   bool set(const JsonDocument& src) {
-    nestingLimit = src.nestingLimit;
     return to<VariantRef>().set(src.as<VariantRef>());
   }
 
