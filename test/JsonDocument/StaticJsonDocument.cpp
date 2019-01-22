@@ -103,6 +103,7 @@ TEST_CASE("StaticJsonDocument") {
 
       doc2 = doc1;
 
+      deserializeJson(doc1, "{\"HELLO\":\"WORLD\"}");
       REQUIRE_JSON(doc2, "{\"hello\":\"world\"}");
     }
 
@@ -125,6 +126,19 @@ TEST_CASE("StaticJsonDocument") {
 
       doc2 = doc1;
 
+      deserializeJson(doc1, "{\"HELLO\":\"WORLD\"}");
+      REQUIRE_JSON(doc2, "{\"hello\":\"world\"}");
+    }
+
+    SECTION("Assign from JsonObject") {
+      StaticJsonDocument<200> doc1;
+      DynamicJsonDocument doc2(4096);
+      doc1.to<JsonVariant>().set(666);
+      deserializeJson(doc1, "{\"hello\":\"world\"}");
+
+      doc2 = doc1.as<JsonObject>();
+
+      deserializeJson(doc1, "{\"HELLO\":\"WORLD\"}");
       REQUIRE_JSON(doc2, "{\"hello\":\"world\"}");
     }
   }

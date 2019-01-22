@@ -28,6 +28,11 @@ class StaticJsonDocument : public JsonDocument {
     set(src);
   }
 
+  StaticJsonDocument operator=(const StaticJsonDocument& src) {
+    set(src);
+    return *this;
+  }
+
   StaticJsonDocument operator=(const JsonDocument& src) {
     set(src);
     return *this;

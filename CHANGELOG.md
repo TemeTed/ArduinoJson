@@ -15,7 +15,7 @@ HEAD
 * Replaced `JsonDocument::nestingLimit` with an additional parameter
   to `deserializeJson()` and `deserializeMsgPack()`
 * Fixed uninitialized variant in `JsonDocument`
-* Fixed `StaticJsonDocument` copy constructor
+* Fixed `StaticJsonDocument` copy constructor and copy assignment
 * Added `JsonDocument::isNull()`
 
 > ### BREAKING CHANGES
