@@ -58,12 +58,24 @@ class JsonDocument : public Visitable {
     return to<VariantRef>().set(src.as<VariantRef>());
   }
 
+  bool set(ArrayConstRef src) {
+    return to<ArrayRef>().copyFrom(src);
+  }
+
   bool set(ObjectConstRef src) {
     return to<ObjectRef>().copyFrom(src);
   }
 
-  bool set(ArrayConstRef src) {
-    return to<ArrayRef>().copyFrom(src);
+  bool set(ObjectRef src) {
+    return to<ObjectRef>().copyFrom(src);
+  }
+
+  bool set(VariantConstRef src) {
+    return to<VariantRef>().set(src);
+  }
+
+  bool set(VariantRef src) {
+    return to<VariantRef>().set(src);
   }
 
   template <typename T>

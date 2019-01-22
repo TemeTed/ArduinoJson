@@ -33,7 +33,8 @@ class StaticJsonDocument : public JsonDocument {
     return *this;
   }
 
-  StaticJsonDocument operator=(const JsonDocument& src) {
+  template <typename T>
+  StaticJsonDocument operator=(const T& src) {
     set(src);
     return *this;
   }

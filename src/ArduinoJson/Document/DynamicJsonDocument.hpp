@@ -38,7 +38,7 @@ class DynamicJsonDocument : public JsonDocument {
   }
 
   template <typename T>
-  DynamicJsonDocument& operator=(const JsonDocument& src) {
+  DynamicJsonDocument& operator=(const T& src) {
     reallocPoolIfTooSmall(src.memoryUsage());
     set(src);
     return *this;

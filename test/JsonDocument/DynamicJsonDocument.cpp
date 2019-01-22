@@ -185,4 +185,15 @@ TEST_CASE("DynamicJsonDocument assignment") {
     REQUIRE_JSON(doc2, "[\"hello\"]");
     REQUIRE(doc2.capacity() == 4096);
   }
+
+  SECTION("Assign from JsonVariant") {
+    StaticJsonDocument<200> doc1;
+    deserializeJson(doc1, "42");
+
+    DynamicJsonDocument doc2(4096);
+    doc2 = doc1.as<JsonVariant>();
+
+    REQUIRE_JSON(doc2, "42");
+    REQUIRE(doc2.capacity() == 4096);
+  }
 }
