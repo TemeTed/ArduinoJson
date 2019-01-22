@@ -16,12 +16,7 @@ class DynamicJsonDocument : public JsonDocument {
       : JsonDocument(allocPool(addPadding(capa))) {}
 
   DynamicJsonDocument(const DynamicJsonDocument& src)
-      : JsonDocument(allocPool(src.capacity())) {
-    set(src);
-  }
-
-  DynamicJsonDocument(const JsonDocument& src)
-      : JsonDocument(allocPool(src.capacity())) {
+      : JsonDocument(allocPool(src.memoryUsage())) {
     set(src);
   }
 

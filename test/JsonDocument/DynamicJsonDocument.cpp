@@ -91,7 +91,7 @@ TEST_CASE("DynamicJsonDocument constructor") {
 
     REQUIRE_JSON(doc2, "{\"hello\":\"world\"}");
 
-    REQUIRE(doc2.capacity() == doc1.capacity());
+    REQUIRE(doc2.capacity() == addPadding(doc1.memoryUsage()));
   }
 
   SECTION("Construct from StaticJsonDocument") {
