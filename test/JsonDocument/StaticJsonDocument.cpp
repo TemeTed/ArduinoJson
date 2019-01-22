@@ -52,6 +52,7 @@ TEST_CASE("StaticJsonDocument") {
 
       StaticJsonDocument<200> doc2 = doc1;
 
+      deserializeJson(doc1, "{\"HELLO\":\"WORLD\"}");
       REQUIRE_JSON(doc2, "{\"hello\":\"world\"}");
     }
 
@@ -65,12 +66,32 @@ TEST_CASE("StaticJsonDocument") {
     }
 
     SECTION("Construct from DynamicJsonDocument") {
-      DynamicJsonDocument doc2(4096);
-      deserializeJson(doc2, "{\"hello\":\"world\"}");
+      DynamicJsonDocument doc1(4096);
+      deserializeJson(doc1, "{\"hello\":\"world\"}");
 
-      StaticJsonDocument<200> doc1 = doc2;
+      StaticJsonDocument<200> doc2 = doc1;
 
-      REQUIRE_JSON(doc1, "{\"hello\":\"world\"}");
+      REQUIRE_JSON(doc2, "{\"hello\":\"world\"}");
+    }
+
+    SECTION("Construct from JsonObject") {
+      DynamicJsonDocument doc1(4096);
+      deserializeJson(doc1, "{\"hello\":\"world\"}");
+
+      StaticJsonDocument<200> doc2 = doc1.as<JsonObject>();
+
+      deserializeJson(doc1, "{\"HELLO\":\"WORLD\"}");
+      REQUIRE_JSON(doc2, "{\"hello\":\"world\"}");
+    }
+
+    SECTION("Construct from JsonArray") {
+      DynamicJsonDocument doc1(4096);
+      deserializeJson(doc1, "[\"hello\",\"world\"]");
+
+      StaticJsonDocument<200> doc2 = doc1.as<JsonArray>();
+
+      deserializeJson(doc1, "[\"HELLO\",\"WORLD\"]");
+      REQUIRE_JSON(doc2, "[\"hello\",\"world\"]");
     }
   }
 

@@ -16,7 +16,14 @@ class StaticJsonDocument : public JsonDocument {
  public:
   StaticJsonDocument() : JsonDocument(_buffer, ACTUAL_CAPACITY) {}
 
-  StaticJsonDocument(const JsonDocument& src)
+  StaticJsonDocument(const StaticJsonDocument& src)
+      : JsonDocument(_buffer, ACTUAL_CAPACITY) {
+    set(src);
+  }
+
+  template <typename T>
+  StaticJsonDocument(const T& src,
+                     typename enable_if<IsVisitable<T>::value>::type* = 0)
       : JsonDocument(_buffer, ACTUAL_CAPACITY) {
     set(src);
   }
