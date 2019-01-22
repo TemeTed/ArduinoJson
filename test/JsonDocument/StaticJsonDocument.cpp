@@ -93,6 +93,15 @@ TEST_CASE("StaticJsonDocument") {
       deserializeJson(doc1, "[\"HELLO\",\"WORLD\"]");
       REQUIRE_JSON(doc2, "[\"hello\",\"world\"]");
     }
+
+    SECTION("Construct from JsonVariant") {
+      DynamicJsonDocument doc1(4096);
+      deserializeJson(doc1, "42");
+
+      StaticJsonDocument<200> doc2 = doc1.as<JsonVariant>();
+
+      REQUIRE_JSON(doc2, "42");
+    }
   }
 
   SECTION("Assignment") {

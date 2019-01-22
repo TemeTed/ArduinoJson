@@ -27,6 +27,12 @@ class DynamicJsonDocument : public JsonDocument {
     set(src);
   }
 
+  // disambiguate
+  DynamicJsonDocument(VariantRef src)
+      : JsonDocument(allocPool(src.memoryUsage())) {
+    set(src);
+  }
+
   ~DynamicJsonDocument() {
     freePool();
   }

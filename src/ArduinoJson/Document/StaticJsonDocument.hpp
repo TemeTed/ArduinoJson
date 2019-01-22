@@ -28,6 +28,11 @@ class StaticJsonDocument : public JsonDocument {
     set(src);
   }
 
+  // disambiguate
+  StaticJsonDocument(VariantRef src) : JsonDocument(_buffer, ACTUAL_CAPACITY) {
+    set(src);
+  }
+
   StaticJsonDocument operator=(const StaticJsonDocument& src) {
     set(src);
     return *this;

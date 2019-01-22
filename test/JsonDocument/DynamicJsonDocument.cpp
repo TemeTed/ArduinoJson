@@ -125,6 +125,16 @@ TEST_CASE("DynamicJsonDocument constructor") {
     REQUIRE_JSON(doc2, "[\"hello\"]");
     REQUIRE(doc2.capacity() == addPadding(doc1.memoryUsage()));
   }
+
+  SECTION("Construct from JsonVariant") {
+    StaticJsonDocument<200> doc1;
+    deserializeJson(doc1, "42");
+
+    DynamicJsonDocument doc2 = doc1.as<JsonVariant>();
+
+    REQUIRE_JSON(doc2, "42");
+    REQUIRE(doc2.capacity() == addPadding(doc1.memoryUsage()));
+  }
 }
 
 TEST_CASE("DynamicJsonDocument assignment") {
@@ -166,8 +176,8 @@ TEST_CASE("DynamicJsonDocument assignment") {
     StaticJsonDocument<200> doc1;
     JsonObject obj = doc1.to<JsonObject>();
     obj["hello"] = "world";
-    DynamicJsonDocument doc2(4096);
 
+    DynamicJsonDocument doc2(4096);
     doc2 = obj;
 
     REQUIRE_JSON(doc2, "{\"hello\":\"world\"}");
@@ -178,8 +188,8 @@ TEST_CASE("DynamicJsonDocument assignment") {
     StaticJsonDocument<200> doc1;
     JsonArray arr = doc1.to<JsonArray>();
     arr.add("hello");
-    DynamicJsonDocument doc2(4096);
 
+    DynamicJsonDocument doc2(4096);
     doc2 = arr;
 
     REQUIRE_JSON(doc2, "[\"hello\"]");

@@ -58,23 +58,9 @@ class JsonDocument : public Visitable {
     return to<VariantRef>().set(src.as<VariantRef>());
   }
 
-  bool set(ArrayConstRef src) {
-    return to<ArrayRef>().copyFrom(src);
-  }
-
-  bool set(ObjectConstRef src) {
-    return to<ObjectRef>().copyFrom(src);
-  }
-
-  bool set(ObjectRef src) {
-    return to<ObjectRef>().copyFrom(src);
-  }
-
-  bool set(VariantConstRef src) {
-    return to<VariantRef>().set(src);
-  }
-
-  bool set(VariantRef src) {
+  template <typename T>
+  typename enable_if<!is_base_of<JsonDocument, T>::value, bool>::type set(
+      const T& src) {
     return to<VariantRef>().set(src);
   }
 
